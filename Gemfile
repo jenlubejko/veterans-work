@@ -35,6 +35,9 @@ gem 'area'
 gem 'devise', '~> 4.2.0'
 gem 'cancancan', '~> 1.15.0'
 gem 'rolify', '~> 5.1.0'
+gem 'geocoder', '~> 1.4.3'
+gem 'angularjs-rails', '~> 1.6.2'
+gem 'rubocop', '~> 0.47.1', require: false
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -55,6 +58,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'rake'
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

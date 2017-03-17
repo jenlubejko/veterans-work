@@ -1,8 +1,7 @@
-
 class CompaniesController < ApplicationController
+
   def index
     @companies = Company.all
-    @attributes = Company.column_names
     render 'index.html.erb'
   end
 
@@ -12,6 +11,7 @@ class CompaniesController < ApplicationController
   end
 
   def edit
+    @company = Company.find_by(id: params[:id])
     render 'edit.html.erb'
   end
 
@@ -22,7 +22,7 @@ class CompaniesController < ApplicationController
   end
 
   def destroy
-    company = Company.find_by(params[:id])
+    company = Company.find(params[:id])
     company.destroy
     redirect_to 'index.html.erb'
   end
@@ -30,14 +30,15 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    require(:company).permit(
-      email: params[:email],
-      password: params[:password],
-      name: params[:name],
-      zip_code: params[:zip_code],
-      phone: params[:phone],
-      description: params[:description],
-      url: params[:url]
+    params.permit(
+      :email,
+      :password,
+      :name,
+      :zip_code,
+      :phone,
+      :description,
+      :url
     )
   end
+
 end

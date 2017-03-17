@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221011838) do
+ActiveRecord::Schema.define(version: 20170307005806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,12 @@ ActiveRecord::Schema.define(version: 20170221011838) do
     t.string   "phone"
     t.text     "description"
     t.string   "url"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.float    "service_radius"
     t.index ["email"], name: "index_companies_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true, using: :btree
   end
@@ -61,6 +67,47 @@ ActiveRecord::Schema.define(version: 20170221011838) do
     t.text     "description"
     t.integer  "customer_id"
     t.date     "expires_date"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.index ["expires_date"], name: "index_customer_requests_on_expires_date", using: :btree
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_customers_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "quotes", force: :cascade do |t|
+    t.integer  "customer_request_id"
+    t.integer  "company_id"
+    t.decimal  "materials_cost_estimate"
+    t.decimal  "labor_cost_estimate"
+    t.date     "start_date"
+    t.date     "completion_date_estimate"
+    t.text     "notes"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.integer  "company_id"
+    t.integer  "stars"
+    t.text     "body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "roles", force: :cascade do |t|
