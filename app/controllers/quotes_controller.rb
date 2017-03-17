@@ -9,9 +9,9 @@ class QuotesController < ApplicationController
   def create
     Quote.create(quote_params)
     if @quote.save
-      QuoteMailer.email_quote(@customer).deliver
-    redirect_to '/customer_requests'
-  else
+      QuoteMailer.email_quote(@customer).deliver_now
+      redirect_to '/customer_requests'
+    else
       render 'new'
     end
   end
