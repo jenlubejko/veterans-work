@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :admins
+  devise_for :customers, :controllers => { registrations: 'customers/registrations'}
   devise_for :companies, :controllers => { registrations: 'companies/registrations'}
-  get '/companies' => 'companies#index'
-  get '/companies/:id' => 'companies#show'
+
+  get '/' => 'pages#index'
+  get '/about' => 'pages#about'
 
   resources :customer_requests
+  resources :companies
+  resources :customers
+  resources :reviews
+  resources :quotes
 end
+
